@@ -1,0 +1,18 @@
+[2026-06-03T12:32:50.421+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-06-03T12:32:50.464+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: flights_ops_medallion_pipe.gold_aggregate manual__2026-06-03T12:27:03.456109+00:00 [queued]>
+[2026-06-03T12:32:50.471+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: flights_ops_medallion_pipe.gold_aggregate manual__2026-06-03T12:27:03.456109+00:00 [queued]>
+[2026-06-03T12:32:50.472+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-06-03T12:32:50.486+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): gold_aggregate> on 2026-06-03 12:27:03.456109+00:00
+[2026-06-03T12:32:50.500+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=2051) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-06-03T12:32:50.497+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', '***_ops_medallion_pipe', 'gold_aggregate', 'manual__2026-06-03T12:27:03.456109+00:00', '--job-id', '157', '--raw', '--subdir', 'DAGS_FOLDER/flight-pipeline.py', '--cfg-path', '/tmp/tmp3_pwsn5w']
+[2026-06-03T12:32:50.501+0000] {standard_task_runner.py:64} INFO - Started process 2065 to run task
+[2026-06-03T12:32:50.502+0000] {standard_task_runner.py:91} INFO - Job 157: Subtask gold_aggregate
+[2026-06-03T12:32:50.581+0000] {task_command.py:426} INFO - Running <TaskInstance: flights_ops_medallion_pipe.gold_aggregate manual__2026-06-03T12:27:03.456109+00:00 [running]> on host 2c94099098f0
+[2026-06-03T12:32:50.684+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='***_ops_medallion_pipe' AIRFLOW_CTX_TASK_ID='gold_aggregate' AIRFLOW_CTX_EXECUTION_DATE='2026-06-03T12:27:03.456109+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-06-03T12:27:03.456109+00:00'
+[2026-06-03T12:32:50.685+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-06-03T12:32:50.780+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-06-03T12:32:50.781+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-06-03T12:32:50.795+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=***_ops_medallion_pipe, task_id=gold_aggregate, run_id=manual__2026-06-03T12:27:03.456109+00:00, execution_date=20260603T122703, start_date=20260603T123250, end_date=20260603T123250
+[2026-06-03T12:32:50.837+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-06-03T12:32:50.862+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-06-03T12:32:50.866+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

@@ -1,0 +1,81 @@
+[2026-06-03T14:55:33.411+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-06-03T14:55:33.458+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: flights_ops_medallion_pipe.bronze_ingestion scheduled__2026-06-03T12:00:00+00:00 [queued]>
+[2026-06-03T14:55:33.472+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: flights_ops_medallion_pipe.bronze_ingestion scheduled__2026-06-03T12:00:00+00:00 [queued]>
+[2026-06-03T14:55:33.473+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2026-06-03T14:55:33.494+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): bronze_ingestion> on 2026-06-03 12:00:00+00:00
+[2026-06-03T14:55:33.510+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', '***_ops_medallion_pipe', 'bronze_ingestion', 'scheduled__2026-06-03T12:00:00+00:00', '--job-id', '159', '--raw', '--subdir', 'DAGS_FOLDER/flight-pipeline.py', '--cfg-path', '/tmp/tmpymw2ay_y']
+[2026-06-03T14:55:33.515+0000] {standard_task_runner.py:91} INFO - Job 159: Subtask bronze_ingestion
+[2026-06-03T14:55:33.515+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=2098) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-06-03T14:55:33.516+0000] {standard_task_runner.py:64} INFO - Started process 2119 to run task
+[2026-06-03T14:55:33.596+0000] {task_command.py:426} INFO - Running <TaskInstance: flights_ops_medallion_pipe.bronze_ingestion scheduled__2026-06-03T12:00:00+00:00 [running]> on host 2c94099098f0
+[2026-06-03T14:55:33.757+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='***_ops_medallion_pipe' AIRFLOW_CTX_TASK_ID='bronze_ingestion' AIRFLOW_CTX_EXECUTION_DATE='2026-06-03T12:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-06-03T12:00:00+00:00'
+[2026-06-03T14:55:33.759+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-06-03T14:56:46.393+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-06-03T14:56:46.401+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/response.py", line 710, in _error_catcher
+    yield
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/response.py", line 1073, in read_chunked
+    self._update_chunk_length()
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/response.py", line 1008, in _update_chunk_length
+    raise InvalidChunkLength(self, line) from None
+urllib3.exceptions.InvalidChunkLength: InvalidChunkLength(got length b'', 0 bytes read)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/models.py", line 820, in generate
+    yield from self.raw.stream(chunk_size, decode_content=True)
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/response.py", line 933, in stream
+    yield from self.read_chunked(amt, decode_content=decode_content)
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/response.py", line 1061, in read_chunked
+    with self._error_catcher():
+  File "/usr/local/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/home/airflow/.local/lib/python3.12/site-packages/urllib3/response.py", line 727, in _error_catcher
+    raise ProtocolError(f"Connection broken: {e!r}", e) from e
+urllib3.exceptions.ProtocolError: ("Connection broken: InvalidChunkLength(got length b'', 0 bytes read)", InvalidChunkLength(got length b'', 0 bytes read))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/scripts/bronze_ingest.py", line 9, in run_bronze_ingestion
+    response = requests.get(URL, timeout=30)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/sessions.py", line 746, in send
+    r.content
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/models.py", line 902, in content
+    self._content = b"".join(self.iter_content(CONTENT_CHUNK_SIZE)) or b""
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/requests/models.py", line 822, in generate
+    raise ChunkedEncodingError(e)
+requests.exceptions.ChunkedEncodingError: ("Connection broken: InvalidChunkLength(got length b'', 0 bytes read)", InvalidChunkLength(got length b'', 0 bytes read))
+[2026-06-03T14:56:46.939+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=***_ops_medallion_pipe, task_id=bronze_ingestion, run_id=scheduled__2026-06-03T12:00:00+00:00, execution_date=20260603T120000, start_date=20260603T145533, end_date=20260603T145646
+[2026-06-03T14:56:47.345+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 159 for task bronze_ingestion (("Connection broken: InvalidChunkLength(got length b'', 0 bytes read)", InvalidChunkLength(got length b'', 0 bytes read)); 2119)
+[2026-06-03T14:56:47.442+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-06-03T14:56:47.540+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-06-03T14:56:47.559+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
