@@ -1,5 +1,5 @@
 Flight Operations Analytics Data Pipeline
-This project is an end-to-end data engineering pipeline that automates the ingestion, transformation, and analysis of live global flight data using Apache Airflow and the Medallion Architecture.
+This project is an end-to-end pipeline that automates the ingestion, transformation, and analysis of live global flight data using Apache Airflow and the Medallion Architecture.
 
 🚀 Project Overview
 Designed to simulate real-world aviation analytics, this pipeline pulls live data from the OpenSky Network API, processes it through Bronze, Silver, and Gold layers, and delivers analytics-ready data for business intelligence.
