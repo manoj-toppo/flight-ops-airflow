@@ -1,0 +1,52 @@
+import streamlit as st
+import os
+
+st.set_page_config(page_title="Flights KPI Dashboard", layout="wide")
+st.title("Flights KPI Dashboard")
+
+conn = st.connection("snowflake", ttl=os.getenv("SNOWFLAKE_CONNECTION_TTL"))
+
+@st.cache_data
+def load_data():
+    return conn.query("""
+        SELECT
+            SUM(TOTAL_FLIGHTS) AS TOTAL_FLIGHTS,
+            ROUND(AVG(AVG_VELOCITY), 2) AS AVG_VELOCITY,
+            SUM(ON_GROUND) AS ON_GROUND,
+            COUNT(DISTINCT ORIGIN_COUNTRY) AS COUNTRIES
+        FROM FLIGHTS.KPI.FLIGHT_KPIS
+    """)
+
+@st.cache_data
+def load_time_series():
+    return conn.query("""
+        SELECT
+            WINDOW_START,
+            SUM(TOTAL_FLIGHTS) AS TOTAL_FLIGHTS,
+            ROUND(AVG(AVG_VELOCITY), 2) AS AVG_VELOCITY,
+            SUM(ON_GROUND) AS ON_GROUND
+        FROM FLIGHTS.KPI.FLIGHT_KPIS
+        GROUP BY WINDOW_START
+        ORDER BY WINDOW_START
+    """)
+
+with st.spinner("Loading KPIs..."):
+    kpis = load_data()
+    ts = load_time_series()
+
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Total Flights", f"{int(kpis['TOTAL_FLIGHTS'][0]):,}")
+col2.metric("Avg Velocity", f"{kpis['AVG_VELOCITY'][0]}")
+col3.metric("On Ground", f"{int(kpis['ON_GROUND'][0]):,}")
+col4.metric("Countries", f"{int(kpis['COUNTRIES'][0])}")
+
+st.subheader("Flights Over Time")
+st.line_chart(ts, x="WINDOW_START", y="TOTAL_FLIGHTS")
+
+st.subheader("Average Velocity Over Time")
+st.line_chart(ts, x="WINDOW_START", y="AVG_VELOCITY")
+
+if st.button("Refresh Data"):
+    load_data.clear()
+    load_time_series.clear()
+    st.rerun()
