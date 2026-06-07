@@ -8,6 +8,7 @@ Ingestion: Pulls real-time flight data every 30 minutes.
 Architecture: Implements a Medallion structure (Bronze → Silver → Gold) for clean data lifecycle management.
 Orchestration: Built using Apache Airflow for scheduling, dependency management, and error handling.
 Storage & Delivery: Supports both local CSV storage and automated ingestion into Snowflake for advanced BI dashboards.
+
 🛠 Tech Stack
 Orchestration: Apache Airflow
 Data Processing: Python (Pandas)
