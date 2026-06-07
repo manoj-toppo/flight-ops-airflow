@@ -1,0 +1,19 @@
+The Dashboard was created in snowflakes
+
+Steps to Create the Flights KPI Dashboard
+1. Discovering of data
+Searched for tables in your FLIGHTS.KPI schema
+Found the FLIGHT_KPIS table with columns: WINDOW_START, ORIGIN_COUNTRY, TOTAL_FLIGHTS, AVG_VELOCITY, ON_GROUND, LOAD_TIME
+2. Checked Snowflake environment
+Confirmed your warehouse: COMPUTE_WH
+Found available compute pool: SYSTEM_COMPUTE_POOL_CPU
+3. Created the project folder /flights-dashboard/ with 4 files:
+4. Built the app logic (streamlit_app.py)
+Connected to Snowflake using st.connection("snowflake")
+Created a cached query to compute aggregate KPIs (total flights, avg velocity, on-ground, country count)
+Created a cached query for time-series data grouped by WINDOW_START
+Displayed 4 metric cards using st.metric()
+Added 2 line charts (flights over time, velocity over time)
+Added a "Refresh Data" button that clears the cache and reruns
+5. Run it
+Open streamlit_app.py in the Workspace and click Run
